@@ -3,9 +3,9 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: [],
+  imports: [RouterOutlet], // o .scss si usas
 })
 export class AppComponent {
   title = 'gestor-solicitudes';

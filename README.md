@@ -1,59 +1,140 @@
-# GestorSolicitudes
+# Gestor de Solicitudes Internas
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+Aplicación web tipo SPA desarrollada con Angular para gestionar solicitudes internas de un departamento. Permite crear, editar, eliminar y filtrar solicitudes de manera sencilla y responsiva, ademas incluye un login simulado
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 Tecnologías Utilizadas
+
+- **Angular 17+**
+- **TypeScript**
+- **SCSS**
+- **Reactive Forms**
+- **Angular Router**
+- **localStorage** (persistencia simulada)
+- **Tailwind** para UI responsiva.
+
+---
+
+## 📌 Funcionalidades Principales
+
+- 📋 Listado de solicitudes
+- ➕ Creación de nuevas solicitudes
+- ✏️ Edición de solicitudes existentes
+- ❌ Eliminación de solicitudes
+- 🔍 Filtros por categoría y estatus
+- 🧠 Estado global vía servicios (o NgRx opcional)
+- ✅ Validaciones de campos y feedback visual
+
+---
+
+## 🧠 Justificación Técnica
+
+- **Angular** proporciona una arquitectura sólida y escalable, ideal para aplicaciones con múltiples componentes reutilizables, formularios avanzados y navegación estructurada.
+- **localStorage** se utiliza para simular persistencia de datos sin necesidad de backend, cumpliendo los requisitos de la prueba técnica y permitiendo una experiencia funcional.
+- **Modularización** clara mediante lazy loading, lo que mejora el rendimiento inicial al cargar solo los módulos necesarios bajo demanda.
+- **Forms reactivos** implementados por su alto control sobre validaciones, estado del formulario y lógica asociada.
+- **Tailwind CSS** se eligió por su facilidad de uso e integración con Angular. Permite desarrollar interfaces modernas, responsivas y limpias con mínima sobrecarga en CSS.
+
+---
+
+## 📁 Estructura del Proyecto
+
+```bash
+src/
+├── app/
+│   ├── core/
+│   │   └── guards/
+│   │   │   └── auth.guard                  #Validar si el usuario tiene una sesion activa para entrar a la seccion de solicitudes, de lo contrario lo envia al login.
+│   │   └── models/
+│   │   │   └── login-request.model         #modelo que se usa para enviar los datos (nombre de usuario y contraseña) al metodo del servicio para iniciar sesión.
+│   │   └── services/
+│   │   │   └── auth/
+│   │   │   │   ├── auth-service.interface  #Definicion de la interface para el servicio
+│   │   │   │    ├── auth-mock.service      #Implementacion de la interface AuthServiceInterface (auth-service.interface)
+│   │   │   │    └── auth.token             #Se usa para DI de la interface AuthServiceInterface (auth-service.interface)
+│   │   │   └── request/
+│   │   │       ├── request.service
+│   │   │       └── ...
+│   ├── features/
+│   │   └── auth/                           # Modulo general para la autenticacion, se puede agregar el registro, recuperacion de contraseña, etc...
+│   │   │   └── login/
+│   │   │       ├── login.component.html
+│   │   │       └── login.component.ts
+│   │   └── requests/
+│   │   │   └── .../
+│   │   │   ├── requests.module             # Módulo de solicitudes (lazy-loaded)
+│   │   │   └── ...
+```
+
+---
+
+## ⚙️ Instalación y Ejecución
+
+1. Clonar el repositorio:
+
+```bash
+git clone https://github.com/Daniel-Valo/gestor-solicitudes.git
+cd gestor-solicitudes
+```
+
+2. Instalar dependencias:
+
+```bash
+npm install
+```
+
+3. Levantar servidor local:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+4. Accede desde tu navegador:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+5. Credenciales de usuario de prueba:
 
-```bash
-ng generate --help
+```
+Usuario: admin
+Contraseña: 123456
 ```
 
-## Building
+## 🧪 Validaciones y Seguridad
 
-To build the project run:
+- Validación de campos requeridos (título, descripción, categoría, estatus)
+- Validacion de campos requeridos en el login (nombre de usuario y la contraseña)
+- Control de formatos y errores
+- Prevención de operaciones sin confirmar
+- Indicador de progreso
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🧠 Decisiones de Diseño UX
 
-## Running unit tests
+- Se eligió una interfaz clara y accesible, del tipo minimalista por cuestiones de tiempo, orientada a usuarios con nivel educativo medio.
+- Botones con etiquetas claras, formularios compactos y mensajes visuales para acciones exitosas o con error, segun sea el caso.
+- Indicadores de progreso, cuando se realiza alguna acción en la que puede tardar algunos segundos en obtener informacion o guardarla.
+- Vistas responsive, compatible con móviles y pantallas de escritorio.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+---
 
-```bash
-ng test
-```
+## ✅ Estado del proyecto
 
-## Running end-to-end tests
+- [x] Estructura base con Angular CLI
+- [x] Lazy loading para módulo de solicitudes
+- [ ] Formulario Agregar/Editar reactivo
+- [ ] Filtros por categoría y estatus
+- [x] Persistencia con localStorage (para guardar el "token" y "usuario")
+- [x] Simulación de autenticación (opcional)
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
+## 📄 Licencia
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Este proyecto es parte de una prueba técnica. Puede adaptarse libremente con fines personales o educativos.
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---

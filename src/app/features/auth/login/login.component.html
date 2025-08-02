@@ -1,0 +1,138 @@
+<div
+  class="bg-gray sm:bg-stone-200 min-h-screen w-screen flex flex-col justify-center items-center"
+>
+  <div
+    class="bg-white sm:shadow-xl px-8 sm:px-12 w-full xs:w-full sm:w-8/12 md:w-7/12 lg:w-7/12 xl:w-1/4 h-screen sm:h-[530px] py-8 rounded-lg border-[1px] border-gray-200"
+  >
+    <!-- TITULO -->
+    <div class="text-center w-full font-bold text-3xl text-green-800 p-4">
+      Gestor de solicitudes
+    </div>
+    <!-- SEPARADOR -->
+    <div class="w-full bg-green-600 mt-1 mb-5" style="height: 1px"></div>
+    <!-- FROMULARIO -->
+    <form
+      [formGroup]="form"
+      (ngSubmit)="login()"
+      autocomplete="off"
+      class="h-[330px]"
+    >
+      <div class="flex flex-col gap-4 px-0 py-4">
+        <!-- CAMPO DE TEXTO PARA USUARIO -->
+        <div>
+          <label class="text-gray-700 focus:border-green-600">Usuario</label>
+          <!-- ICONO -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="font-medium text-2xl text-gray-600 absolute p-2.5 px-3 w-11"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+            />
+          </svg>
+          <!-- CAMPO DE TEXTO -->
+          <input
+            class="py-2 pl-10 border border-gray-300 w-full focus:border-green-700 focus:outline-none rounded"
+            placeholder="Usuario"
+            formControlName="username"
+            type="text"
+          />
+          <!-- MENSAJES PARA VALIDACIONES -->
+          <div
+            *ngIf="
+              form.get('username')?.touched && form.get('username')?.invalid
+            "
+            class="text-red-600 text-sm"
+          >
+            <div *ngIf="form.get('username')?.errors?.['required']">
+              El nombre de usuario es obligatorio
+            </div>
+            <div *ngIf="form.get('username')?.errors?.['minlength']">
+              Mínimo 5 caracteres
+            </div>
+          </div>
+        </div>
+        <!-- CAMPO DE TEXTO PARA CONTRASEÑA -->
+        <div>
+          <label class="text-gray-700">Contraseña:</label>
+          <!-- ICONO -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="font-medium text-2xl text-gray-600 absolute p-2.5 px-3 w-11"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+            />
+          </svg>
+          <!-- CAMPO DE PASSWORD -->
+          <input
+            class="py-2 pl-10 border border-gray-300 w-full focus:border-green-700 focus:outline-none rounded"
+            placeholder="Contraseña"
+            formControlName="password"
+            (paste)="(false)"
+            (copy)="(false)"
+            (cut)="(false)"
+            type="password"
+          />
+          <!-- MENSAJES PARA VALIDACIONES -->
+          <div
+            *ngIf="
+              form.get('password')?.touched && form.get('password')?.invalid
+            "
+            class="text-red-600 text-sm"
+          >
+            <div *ngIf="form.get('password')?.errors?.['required']">
+              La contraseña es obligatoria
+            </div>
+            <div *ngIf="form.get('password')?.errors?.['minlength']">
+              Mínimo 6 caracteres
+            </div>
+          </div>
+        </div>
+        <!-- BOTON PARA INICIAR SESION -->
+        <div class="w-full flex flex-row justify-end">
+          <button
+            [disabled]="loading"
+            class="bg-green-800 border border-green-900 hover:bg-green-700 hover:text-white duration-100 ease-in-out w-6/12 text-green-100 p-2 flex flex-row justify-center items-center gap-1"
+            type="submit"
+          >
+            <!-- INDICADOR DE PROGRESO -->
+            <div *ngIf="loading" class="flex justify-center items-center mr-2">
+              <div
+                class="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"
+              ></div>
+            </div>
+            Iniciar sesión
+          </button>
+        </div>
+        <!-- MENSAJE DE ERROR -->
+        <div
+          type="button"
+          *ngIf="showToast"
+          (click)="showToast = false"
+          class="w-full h-auto rounded-sm bg-red-500 px-4 x-transition.duration.300ms text-white transition hover:bg-red-600"
+        >
+          <div class="flex items-center my-2">
+            <span class="text-lg"><i class="bx bx-check"></i></span>
+            <p class="font-light">{{ errorMessage }}</p>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="w-full flex justify-center mt-4">
+      <a>&copy;Prueba técnica </a>
+    </div>
+  </div>
+</div>
