@@ -23,11 +23,11 @@ export class RequestMockService implements RequestServiceInterface {
     return this.requests$.asObservable();
   }
 
-  create(request: Request): Observable<number> {
+  create(request: Request): Observable<boolean> {
     const current = [...this.requests$.value, request];
     this.requests$.next(current);
     this.updateStorage();
-    return of();
+    return of(true);
   }
 
   update(updated: Request): Observable<boolean> {
@@ -36,14 +36,14 @@ export class RequestMockService implements RequestServiceInterface {
     );
     this.requests$.next(current);
     this.updateStorage();
-    return of();
+    return of(true);
   }
 
   delete(id: number): Observable<boolean> {
     const current = this.requests$.value.filter((r) => r.id !== id);
     this.requests$.next(current);
     this.updateStorage();
-    return of();
+    return of(true);
   }
 
   getNextId(): number {

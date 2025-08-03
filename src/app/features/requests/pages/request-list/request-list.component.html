@@ -1,70 +1,98 @@
-<div class="mx-auto px-10 py-10 my-10 bg-white rounded-lg">
-  <!-- Titulo -->
-  <h2 class="text-4xl font-bold mb-4 text-green-800">Solicitudes</h2>
-  <!-- SEPARADOR -->
-  <div class="w-full bg-green-600 mt-1 mb-14" style="height: 1px"></div>
-  <!-- Filtros -->
-  <div class="flex flex-col justify-end sm:flex-row gap-2 mb-4">
-    <!-- Filtro para categorias -->
-    <select
-      (change)="onCategoryChange($any($event.target).value)"
-      class="p-2 border border-green-800 focus:outline-none rounded w-full sm:w-2/12"
-    >
-      <option value="Todas">Todas las categorías</option>
-      <option>Permiso</option>
-      <option>Compra</option>
-      <option>Soporte</option>
-    </select>
-    <!-- Filtro para estatus -->
-    <select
-      (change)="onStatusChange($any($event.target).value)"
-      class="p-2 border border-green-800 focus:outline-none rounded w-full sm:w-2/12"
-    >
-      <option value="Todos">Todos los estatus</option>
-      <option>Pendiente</option>
-      <option>En Proceso</option>
-      <option>Finalizada</option>
-    </select>
-  </div>
-  <!-- Busqueda de solicitudes y boton agregar -->
-  <div class="flex flex-col justify-end sm:flex-row gap-2 mb-4">
-    <!-- CAMPO PARA BUSQUEDA DE SOLICITUDES -->
-    <input
-      [ngModel]="searchTerm$ | async"
-      (ngModelChange)="onTextSearchChange($event)"
-      class="py-2 pl-10 border border-gray-400 w-full focus:border-green-700 focus:outline-none rounded"
-      placeholder="Buscar solicitud"
-      type="text"
-    />
-    <!-- BUTON PARA AGREGAR UNA SOLICITUD NUEVA -->
+<div class="mx-auto px-10 py-10 bg-white rounded-lg">
+  <div class="flex items-center justify-between mb-4">
+    <!-- Título alineado a la izquierda -->
+    <h2 class="text-4xl font-bold text-green-800">Solicitudes</h2>
+
+    <!-- Botón alineado a la derecha -->
     <button
-      (click)="add()"
-      title="Agregar una solicitud nueva"
-      class="bg-green-800 border border-green-900 hover:bg-green-700 hover:text-white duration-100 ease-in-out w-full sm:w-1/12 text-green-100 p-2 flex flex-row justify-center items-center gap-1"
+      class="p-2 border rounded-3xl hover:bg-gray-200"
+      title="Cerrar sesión"
+      (click)="logout()"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="w-5 h-5"
         fill="none"
         viewBox="0 0 24 24"
+        stroke-width="1.5"
         stroke="currentColor"
+        class="size-6"
       >
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 4v16m8-8H4"
+          d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
         />
       </svg>
-      <span class="sm:text-sm">Nueva</span>
     </button>
   </div>
+  <!-- SEPARADOR -->
+  <div class="w-full bg-green-600 mt-1 mb-4" style="height: 1px"></div>
+  <div class="bg-[#f0efef] rounded-md px-4 py-6 mb-4 border shadow-sm">
+    <!-- Filtros -->
+    <div class="flex flex-col justify-end sm:flex-row gap-3">
+      <span class="h-10 pt-2 text-gray-700 sm:text-sm/6">Filtros</span>
+      <!-- Filtro para categorias -->
+      <select
+        (change)="onCategoryChange($any($event.target).value)"
+        class="w-full h-10 border rounded-md bg-white pl-2 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6 sm:w-2/12"
+      >
+        <option value="Todas">Todas las categorías</option>
+        <option>Permiso</option>
+        <option>Compra</option>
+        <option>Soporte</option>
+      </select>
+      <!-- Filtro para estatus -->
+      <select
+        (change)="onStatusChange($any($event.target).value)"
+        class="w-full h-10 border rounded-md bg-white pl-2 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6 sm:w-2/12"
+      >
+        <option value="Todos">Todos los estatus</option>
+        <option>Pendiente</option>
+        <option>En Proceso</option>
+        <option>Finalizada</option>
+      </select>
+    </div>
+    <!-- Busqueda de solicitudes y boton agregar -->
+    <div class="flex flex-col mt-3 justify-end sm:flex-row gap-3">
+      <!-- CAMPO PARA BUSQUEDA DE SOLICITUDES -->
+      <input
+        (input)="onSearchChange($any($event.target).value)"
+        class="py-2 pl-10 border border-gray-400 w-full focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 rounded"
+        placeholder="Buscar solicitud"
+        type="text"
+      />
+      <!-- BUTON PARA AGREGAR UNA SOLICITUD NUEVA -->
+      <button
+        (click)="onModalAddEditRequestOpen()"
+        title="Agregar una solicitud nueva"
+        class="bg-green-800 border border-green-800 hover:bg-green-700 hover:text-white duration-100 ease-in-out w-full sm:w-1/12 text-green-100 p-2 flex flex-row justify-center items-center gap-1"
+      >
+        <!-- ICONO -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 4v16m8-8H4"
+          />
+        </svg>
+        <span class="sm:text-sm">Nueva</span>
+      </button>
+    </div>
+  </div>
+
   <!-- Tabla de solicitudes -->
   <div class="w-full overflow-x-auto">
-    <table class="min-w-full table-fixed">
+    <table class="min-w-full table-fixed bg-white rounded">
       <thead>
         <tr
-          class="text-md font-semibold tracking-wide text-left text-gray-700 bg-green-100 uppercase border border-gray-300"
+          class="text-md font-semibold tracking-wide text-left text-gray-600 bg-[#f0efef] uppercase border border-gray-300 rounded"
         >
           <th class="px-4 py-2 text-left">Título</th>
           <th class="px-4 py-2 text-left">Categoría</th>
@@ -77,13 +105,13 @@
       <tbody class="text-sm font-normal text-gray-700">
         <tr
           class="hover:bg-gray-50 border"
-          *ngFor="let r of filteredRequests$ | async"
+          *ngFor="let r of store.applyFilters()"
         >
           <td class="px-4 py-2">{{ r.title }}</td>
           <td class="px-4 py-2">{{ r.category }}</td>
           <td class="px-4 py-2">{{ r.status }}</td>
           <td class="px-4 py-2">
-            {{ r.createdAt | date : "dd/MM/yyyy hh:mm a" : "es-MX" }}
+            {{ r.createdAt | date : "dd/MM/yyyy" : "es-MX" }}
           </td>
           <td class="px-4 py-2">{{ r.user }}</td>
           <td class="p-2 text-center">
@@ -92,8 +120,9 @@
               <button
                 class="p-2 border rounded hover:bg-gray-200"
                 title="Editar solicitud"
-                [routerLink]="['/solicitudes/editar', r.id]"
+                (click)="onModalAddEditRequestOpen(r)"
               >
+                <!-- Icono editar -->
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -113,8 +142,9 @@
               <button
                 class="p-2 border rounded hover:bg-gray-200 text-red-500"
                 title="Eliminar solicitud"
-                (click)="askDelete(r)"
+                (click)="onModalConfirmDeleteOpen(r)"
               >
+                <!-- Icono eliminar -->
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="w-5 h-5"
@@ -134,16 +164,30 @@
           </td>
         </tr>
       </tbody>
+      <!-- Dialogo para confirmar si elimina o no una solicitud -->
       <app-confirm-dialog
-        *ngIf="showConfirm"
-        (confirm)="onConfirmResult($event)"
-        [message]="
-          'Se eliminara la solicitud: ' +
-          informationToDisplay +
-          ', Este proceso ya no es reversible. ¿Desea continuar?'
-        "
+        *ngIf="showModalConfirmDelete"
         title="Eliminar solicitud"
-      ></app-confirm-dialog>
+        [message]="deleteConfirmationMessage"
+        (onConfirmResultEvent)="onModalConfirmDeleteResultEventHandler($event)"
+      />
+      <!-- Dialogo para agregar o editar una solicitud -->
+      <app-request-form
+        *ngIf="showModalAddEditRequest"
+        [request]="selectedRequest"
+        (onSubmitEvent)="onConfirmModalAddEditEventHandler($event)"
+        (onCancelEvent)="onCancelModalAddEditEventHandler()"
+      />
     </table>
+  </div>
+  <div
+    *ngIf="showToast"
+    class="fixed top-4 right-4 z-50 px-4 py-3 rounded shadow-md text-white transition-opacity duration-300"
+    [ngClass]="{
+      'bg-green-600': toastType === 'success',
+      'bg-red-600': toastType === 'error'
+    }"
+  >
+    {{ toastMessage }}
   </div>
 </div>

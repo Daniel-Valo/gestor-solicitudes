@@ -6,15 +6,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './confirm-dialog.component.css',
 })
 export class ConfirmDialogComponent {
-  @Output() confirm = new EventEmitter<boolean>();
+  @Output() onConfirmResultEvent = new EventEmitter<boolean>();
   @Input() title: string = '';
   @Input() message: string = '';
 
   onConfirm() {
-    this.confirm.emit(true);
+    this.onConfirmResultEvent.emit(true);
   }
 
   onCancel() {
-    this.confirm.emit(false);
+    this.onConfirmResultEvent.emit(false);
   }
 }
