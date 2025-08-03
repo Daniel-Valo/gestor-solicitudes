@@ -35,6 +35,7 @@ Aplicación web tipo SPA desarrollada con Angular para gestionar solicitudes int
 - **Modularización** clara mediante lazy loading, lo que mejora el rendimiento inicial al cargar solo los módulos necesarios bajo demanda.
 - **Forms reactivos** implementados por su alto control sobre validaciones, estado del formulario y lógica asociada.
 - **Tailwind CSS** se eligió por su facilidad de uso e integración con Angular. Permite desarrollar interfaces modernas, responsivas y limpias con mínima sobrecarga en CSS.
+- **heroicons** se utilizaron algunos iconos que fueron obtenidos en formato SVG del sitio web de https://heroicons.com/.
 
 ---
 
@@ -47,24 +48,39 @@ src/
 │   │   └── guards/
 │   │   │   └── auth.guard                  #Validar si el usuario tiene una sesion activa para entrar a la seccion de solicitudes, de lo contrario lo envia al login.
 │   │   └── models/
+│   │   │   ├── request-category.enum
+│   │   │   ├── request-status.enum
+│   │   │   ├── request.model
 │   │   │   └── login-request.model         #modelo que se usa para enviar los datos (nombre de usuario y contraseña) al metodo del servicio para iniciar sesión.
 │   │   └── services/
 │   │   │   └── auth/
-│   │   │   │   ├── auth-service.interface  #Definicion de la interface para el servicio
-│   │   │   │    ├── auth-mock.service      #Implementacion de la interface AuthServiceInterface (auth-service.interface)
-│   │   │   │    └── auth.token             #Se usa para DI de la interface AuthServiceInterface (auth-service.interface)
+│   │   │   │     ├── auth-service.interface  #Definicion de la interface para el servicio
+│   │   │   │     ├── auth-mock.service       #Implementacion de la interface AuthServiceInterface (auth-service.interface)
+│   │   │   │     └── auth.token              #Se usa para DI de la interface AuthServiceInterface (auth-service.interface)
 │   │   │   └── request/
-│   │   │       ├── request.service
-│   │   │       └── ...
+│   │   │         ├── request-service.interface #Definicion de la interface para el servicio
+│   │   │         ├── request-mock.service      #Implementacion de la interface RequestServiceInterface (request-service.interface)
+│   │   │         └── request.token             #Se usa para DI de la interface RequestServiceInterface (request-service.interface)
 │   ├── features/
 │   │   └── auth/                           # Modulo general para la autenticacion, se puede agregar el registro, recuperacion de contraseña, etc...
 │   │   │   └── login/
-│   │   │       ├── login.component.html
-│   │   │       └── login.component.ts
+│   │   │         ├── login.component.html
+│   │   │         └── login.component.ts
 │   │   └── requests/
-│   │   │   └── .../
-│   │   │   ├── requests.module             # Módulo de solicitudes (lazy-loaded)
-│   │   │   └── ...
+│   │   │    ├── pages/
+│   │   │    │    ├── request-list/
+│   │   │    │        ├── request-list.html
+│   │   │    │        └── request-list.ts
+│   │   │    │    └── request-form/          #Formulario para la agregar/edicion una solicitud por le momento vacios
+│   │   │    │        ├── request-form.html
+│   │   │    │        └── request-form.ts
+│   │   │    ├── requests-routing.module.ts
+│   │   │    ├── requests.module.ts
+│   │
+│   ├── shared/
+│   │   │   └── confirm-dialog/              # Dialogo modal para solicitar un confirmacion sobre alguna acción
+│   │   │         ├── confirm-dialog.html
+│   │   │         └── confirm-dialog.ts
 ```
 
 ---
@@ -127,7 +143,7 @@ Contraseña: 123456
 - [x] Estructura base con Angular CLI
 - [x] Lazy loading para módulo de solicitudes
 - [ ] Formulario Agregar/Editar reactivo
-- [ ] Filtros por categoría y estatus
+- [x] Filtros por categoría y estatus
 - [x] Persistencia con localStorage (para guardar el "token" y "usuario")
 - [x] Simulación de autenticación (opcional)
 
