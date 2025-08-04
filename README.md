@@ -1,68 +1,70 @@
 # Gestor de Solicitudes Internas
 
-Aplicación web tipo SPA desarrollada con Angular para gestionar solicitudes internas de un departamento. Permite crear, editar, eliminar y filtrar solicitudes de manera sencilla y responsiva, ademas incluye un login simulado.
-
----
-
-## Arquitectura del Proyecto
-
-El proyecto está construido con una arquitectura modular y escalable basada en Angular, que incluye:
-
-- **Modularización:** Organización en módulos funcionales independientes, facilitando el mantenimiento y la carga diferida (lazy loading) para mejorar el rendimiento.
-- **Separación de responsabilidades:** Servicios para lógica y acceso a datos, componentes para UI, y formularios reactivos para manejo y validación de datos.
-- **Inyección de dependencias:** Uso extensivo para desacoplar componentes y servicios, facilitando la reutilización y pruebas.
-- **Gestión de estado reactiva con Signals:** Implementación de un store global (`RequestSignalStore`) para manejar solicitudes, filtros y búsquedas, permitiendo sincronización automática entre estado y UI.
+Aplicación web desarrollada con Angular para gestionar solicitudes internas de manera sencilla y eficiente. Esta SPA permite listar, crear, editar y eliminar solicitudes, simulando persistencia con `localStorage`.
 
 ---
 
 ## 🚀 Tecnologías Utilizadas
 
-Este proyecto utiliza las siguientes tecnologías y herramientas para ofrecer una aplicación eficiente, moderna y mantenible:
-
-- **Angular:** Framework principal para el desarrollo de la aplicación SPA.
-- **TypeScript:** Lenguaje tipado que mejora la mantenibilidad y robustez del código.
-- **RxJS:** Librería para programación reactiva, usada para manejar streams y estado reactivo.
-- **Angular Signals:** Para manejo moderno y reactivo del estado global con señales reactivas.
-- **Tailwind CSS:** Framework CSS basado en utilidades para diseño responsivo y limpio.
-- **Heroicons (SVG):** Iconografía moderna para la interfaz de usuario.
-- **Reactive Forms:** Para validación y control avanzado de formularios.
-- **localStorage:** Simulación de persistencia de datos sin necesidad de backend.
-- **Toast Notifications:** Feedback visual para acciones del usuario (guardar, eliminar, etc.).
-- **Lazy Loading (Angular):** Carga bajo demanda de módulos para optimizar rendimiento.
+- **Angular**: Framework robusto y escalable para aplicaciones SPA.
+- **TypeScript**: Tipado fuerte que mejora la mantenibilidad del código.
+- **LocalStorage**: Para simular persistencia sin necesidad de backend.
+- **Signals y servicios**: Para manejo eficiente del estado.
+- **Tailwind CSS / CSS personalizado**: (si aplica) Para estilos rápidos y adaptables.
 
 ---
 
-## 📌 Funcionalidades Principales
+## 🧠 Justificación de arquitectura y decisiones técnicas
 
-- 📋 Listado de solicitudes
-- ➕ Creación de nuevas solicitudes
-- ✏️ Edición de solicitudes existentes
-- ❌ Eliminación de solicitudes
-- 🔍 Filtros por categoría y estatus
-- 🧠 Estado global vía servicios usando signals
-- ✅ Validaciones de campos y feedback visual
+- **Arquitectura modular**: Separación de responsabilidades entre componentes, servicios y almacenamiento.
+- **Estado reactivo con Signals**: Facilita la sincronización entre la vista y los datos.
+- **`RequestMockService` + `RequestSignalStore`**: Combinación que permite simular un flujo realista de una API, pero manejando el estado local de forma controlada.
+- **Clean Code**: Componentes desacoplados, funciones bien nombradas y reutilización del código.
+- **Responsividad**: Aunque simple, el diseño permite usarlo cómodamente en pantallas pequeñas.
 
 ---
 
-## 🧠 Justificación Técnica
+## 💻 Instalación y ejecución
 
-- **Heroicons:** Se utilizaron algunos iconos obtenidos en formato SVG desde el sitio web oficial [heroicons.com](https://heroicons.com/) para representar acciones clave como editar o eliminar, brindando una experiencia visual clara y coherente.
+```bash
+# Clonar el repositorio
+git clone https://github.com/Daniel-Valo/gestor-solicitudes.git
 
-- **Angular:** Se eligió como framework principal por su arquitectura robusta, modular y escalable. Su sistema de inyección de dependencias, rutas y componentes favorece la separación de responsabilidades y el mantenimiento del código.
+# Ingresar al proyecto
+cd gestor-solicitudes
 
-- **localStorage:** Se utilizó para simular la persistencia de datos sin necesidad de backend. Se implementó a través de un servicio (`RequestMockService`) que sincroniza automáticamente los cambios realizados (crear, editar, eliminar) con el almacenamiento local, cumpliendo los requisitos funcionales de la prueba técnica.
+# Instalar dependencias
+npm install
 
-- **State Management con Signals:** Se integró un `RequestSignalStore` como mecanismo de estado global reactivo para manejar solicitudes. Esto permite aplicar búsquedas y filtros en tiempo real de manera eficiente, manteniendo el estado sincronizado con la UI sin necesidad de múltiples suscripciones.
+# Levantar el servidor de desarrollo
+ng serve
+```
 
-- **Modularización:** Se organizó la aplicación en módulos dedicados, soportando lazy loading, lo que mejora el rendimiento al cargar sólo lo necesario, manteniendo una estructura clara y escalable.
+Luego, abre tu navegador en `http://localhost:4200`.
 
-- **Forms Reactivos:** Implementados para gestionar la creación y edición de solicitudes, aprovechando su capacidad de validación dinámica y control estricto sobre el estado del formulario. Se añadieron validaciones personalizadas como longitud máxima, campos requeridos y fecha mínima.
+Credenciales del usuario de prueba:
+Usuario: admin
+Contraseña: 123456
 
-- **Feedback con Toasts:** Se incorporaron notificaciones visuales tipo toast para informar al usuario sobre operaciones exitosas o errores (crear, editar, eliminar), mejorando así la experiencia e interacción general con la aplicación.
+---
 
-- **Tailwind CSS:** Elegido para el diseño visual por su productividad, bajo peso y buena integración con Angular. Permite construir una interfaz limpia, moderna y altamente responsiva sin depender de hojas de estilo externas.
+## 🧪 Funcionalidades principales
 
-- **UX Optimizada:** Se diseñaron modales (crear/editar solicitudes, confirmación de eliminación) con adaptabilidad para dispositivos móviles y escritorio, usando propiedades como `max-w`, `max-h` y `overflow-y` para garantizar legibilidad y usabilidad en distintos tamaños de pantalla.
+- 📄 Listado de solicitudes con filtros por estado.
+- ➕ Crear nueva solicitud con validaciones de formulario.
+- ✏️ Editar solicitud existente.
+- 🗑 Eliminar solicitud con confirmación.
+- 💾 Persistencia usando `localStorage`.
+- ✅ Validaciones visuales y control de errores básicos.
+
+---
+
+## 🎨 Decisiones de diseño / UX
+
+- **Botones visibles y accesibles**: Siempre accesibles en cada elemento de la lista.
+- **Título alineado a la izquierda, acciones a la derecha**: Para una navegación clara.
+- **Mensajes de validación**: Proveen retroalimentación rápida.
+- **Diseño limpio**: Evita distracciones innecesarias y se centra en la funcionalidad.
 
 ---
 
@@ -114,72 +116,17 @@ src/
 
 ---
 
-## ⚙️ Instalación y Ejecución
+## 🔐 Consideraciones
 
-1. Clonar el repositorio:
-
-```bash
-git clone https://github.com/Daniel-Valo/gestor-solicitudes.git
-cd gestor-solicitudes
-```
-
-2. Instalar dependencias:
-
-```bash
-npm install
-```
-
-3. Levantar servidor local:
-
-```bash
-ng serve
-```
-
-4. Accede desde tu navegador:
-
-```
-http://localhost:4200
-```
-
-5. Credenciales de usuario de prueba:
-
-```
-Usuario: admin
-Contraseña: 123456
-```
-
-## 🧪 Validaciones y Seguridad
-
-- Validación de campos requeridos (título, descripción, usuario solicitante, fecha)
-- Validacion de campos requeridos en el login (nombre de usuario y la contraseña)
-- Control de formatos y errores
-- Prevención de operaciones sin confirmar
-- Indicador de progreso
+- El repositorio es **público** para su evaluación.
+- No se usa backend real, pero se puede integrar fácilmente en el futuro.
 
 ---
 
-## 🧠 Decisiones de Diseño UX
+## ✨ Autor
 
-- **Interfaces limpias y minimalistas:** Se utilizó Tailwind CSS para crear una UI moderna, clara y con buena jerarquía visual, facilitando la usabilidad y navegación.
-- **Modales adaptativos:** Los formularios de creación/edición y confirmación de eliminación están diseñados para ajustarse a distintos tamaños de pantalla, evitando que el contenido se vea amontonado o demasiado pequeño, mejorando la experiencia en dispositivos móviles y escritorios.
-- **Feedback inmediato:** Se incorporaron notificaciones tipo toast para informar al usuario sobre el resultado de sus acciones (guardado, actualización, eliminación, errores), contribuyendo a una comunicación clara y efectiva.
-- **Filtros y búsqueda en tiempo real:** La lista de solicitudes se puede filtrar y buscar dinámicamente, con resultados instantáneos, facilitando la localización rápida de la información.
-- **Validaciones claras y accesibles:** Los formularios emplean validaciones reactivas que guían al usuario en la corrección de errores antes de enviar datos, mejorando la calidad y reduciendo frustraciones.
-- **Consistencia visual:** Uso de íconos SVG (heroicons) para acciones comunes, manteniendo uniformidad y reconocimiento rápido de funcionalidades.
-- **Optimización para dispositivos móviles:** Diseño responsivo que asegura que todas las funcionalidades sean accesibles y usables desde smartphones y tablets.
-
-Estas decisiones contribuyen a una experiencia de usuario intuitiva, eficiente y agradable, alineada con buenas prácticas de usabilidad.
-
----
-
-## ✅ Estado del proyecto
-
-- [x] Estructura base con Angular CLI
-- [x] Lazy loading para módulo de solicitudes
-- [x] Formulario Agregar/Editar reactivo
-- [x] Filtros por categoría y estatus
-- [x] Persistencia con localStorage (para guardar el "token" y "usuario") y estado global son signals
-- [x] Simulación de autenticación (opcional)
+**Daniel Valdivia Loza**  
+[GitHub - Daniel-Valo](https://github.com/Daniel-Valo)
 
 ---
 
