@@ -10,6 +10,7 @@ import { RequestCategory } from '../../../../core/models/request-category.enum';
 import { RequestStatus } from '../../../../core/models/request-status.enum';
 import { RequestServiceInterface } from '../../../../core/services/requests/request-service.interface';
 import { REQUEST_SERVICE } from '../../../../core/services/requests/request.token';
+import { onlyTodayOrYesterdayValidator } from '../../../../core/validators/date.validators';
 
 @Component({
   selector: 'app-request-form',
@@ -38,9 +39,16 @@ export class RequestFormComponent {
     this.form = this.fb.group({
       title: [
         this.request?.title || '',
-        [Validators.required, Validators.maxLength(100)],
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(40),
+        ],
       ],
-      description: [this.request?.description || '', [Validators.required]],
+      user: [
+        this.request?.user || '',
+        [Validators.required, Validators.minLength(3)],
+      ],
       category: [
         this.request?.category || RequestCategory.Permiso,
         Validators.required,
@@ -49,13 +57,17 @@ export class RequestFormComponent {
         this.request?.status || RequestStatus.Pendiente,
         Validators.required,
       ],
-      user: [
-        this.request?.user || '',
-        [Validators.required, Validators.minLength(3)],
+      description: [
+        this.request?.description || '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(120),
+        ],
       ],
       createdAt: [
         this.formatDate(this.request?.createdAt || new Date()),
-        [Validators.required, this.noFutureDateValidator],
+        [Validators.required, onlyTodayOrYesterdayValidator],
       ],
     });
   }
@@ -82,10 +94,5 @@ export class RequestFormComponent {
   private formatDate(date: string | Date): string {
     const d = new Date(date);
     return d.toISOString().split('T')[0]; // Retorna solo "YYYY-MM-DD"
-  }
-
-  noFutureDateValidator(control: AbstractControl) {
-    const today = new Date().toISOString().split('T')[0];
-    return control.value > today ? { futureDate: true } : null;
   }
 }

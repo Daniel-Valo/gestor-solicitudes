@@ -1,5 +1,5 @@
 <div class="mx-auto px-10 py-10 bg-white rounded-lg">
-  <div class="flex items-center justify-between mb-4">
+  <header class="flex items-center justify-between mb-4">
     <!-- Título alineado a la izquierda -->
     <h2 class="text-4xl font-bold text-green-800">Solicitudes</h2>
 
@@ -9,6 +9,7 @@
       title="Cerrar sesión"
       (click)="logout()"
     >
+      <!-- Icono -->
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -24,50 +25,20 @@
         />
       </svg>
     </button>
-  </div>
+  </header>
   <!-- SEPARADOR -->
   <div class="w-full bg-green-600 mt-1 mb-4" style="height: 1px"></div>
-  <div class="bg-[#f0efef] rounded-md px-4 py-6 mb-4 border shadow-sm">
-    <!-- Filtros -->
-    <div class="flex flex-col justify-end sm:flex-row gap-3">
-      <span class="h-10 pt-2 text-gray-700 sm:text-sm/6">Filtros</span>
-      <!-- Filtro para categorias -->
-      <select
-        (change)="onCategoryChange($any($event.target).value)"
-        class="w-full h-10 border rounded-md bg-white pl-2 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6 sm:w-2/12"
-      >
-        <option value="Todas">Todas las categorías</option>
-        <option>Permiso</option>
-        <option>Compra</option>
-        <option>Soporte</option>
-      </select>
-      <!-- Filtro para estatus -->
-      <select
-        (change)="onStatusChange($any($event.target).value)"
-        class="w-full h-10 border rounded-md bg-white pl-2 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6 sm:w-2/12"
-      >
-        <option value="Todos">Todos los estatus</option>
-        <option>Pendiente</option>
-        <option>En Proceso</option>
-        <option>Finalizada</option>
-      </select>
-    </div>
-    <!-- Busqueda de solicitudes y boton agregar -->
-    <div class="flex flex-col mt-3 justify-end sm:flex-row gap-3">
-      <!-- CAMPO PARA BUSQUEDA DE SOLICITUDES -->
-      <input
-        (input)="onSearchChange($any($event.target).value)"
-        class="py-2 pl-10 border border-gray-400 w-full focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 rounded"
-        placeholder="Buscar solicitud"
-        type="text"
-      />
-      <!-- BUTON PARA AGREGAR UNA SOLICITUD NUEVA -->
+  <!-- Contenedor para boton agregar -->
+  <div class="rounded-md py-2">
+    <!-- Boton agregar -->
+    <div class="flex flex-col my-3 justify-end sm:flex-row gap-3 sm:px-4">
+      <!-- BOTÓN PARA AGREGAR UNA SOLICITUD NUEVA -->
       <button
         (click)="onModalAddEditRequestOpen()"
         title="Agregar una solicitud nueva"
-        class="bg-green-800 border border-green-800 hover:bg-green-700 hover:text-white duration-100 ease-in-out w-full sm:w-1/12 text-green-100 p-2 flex flex-row justify-center items-center gap-1"
+        class="inline-flex items-center justify-center min-w-[240px] bg-green-600 hover:bg-green-700 text-white font-semibold px-5 py-2 rounded-md shadow-md transition-colors gap-x-2"
       >
-        <!-- ICONO -->
+        <!-- Icono -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="w-5 h-5"
@@ -82,13 +53,78 @@
             d="M12 4v16m8-8H4"
           />
         </svg>
-        <span class="sm:text-sm">Nueva</span>
+        <span class="text-sm sm:text-base">Nueva solicitud</span>
+      </button>
+    </div>
+  </div>
+  <!-- Filtros -->
+  <div
+    class="bg-[#f0efef] rounded-md px-4 py-6 mb-4 border border-gray-300 shadow-sm"
+  >
+    <!-- Encabezado panel filtros -->
+    <h3 class="text-lg font-semibold mb-4 text-gray-800">Filtros</h3>
+    <div class="grid grid-cols-2 md:grid-cols-8 gap-4">
+      <!-- Búsqueda -->
+      <input
+        type="text"
+        placeholder="Buscar por título o usuario"
+        class="border rounded-md px-4 w-full focus:outline-none focus:ring-2 focus:ring-green-600 col-span-2 md:col-span-5"
+        [value]="store.getSearchTerm()"
+        (input)="store.setSearchTerm($any($event.target).value)"
+      />
+      <!-- Categoría -->
+      <select
+        class="border rounded-md px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-600 col-span-2 md:col-span-1"
+        [value]="store.getCategory()"
+        (change)="store.setCategory($any($event.target).value)"
+      >
+        <option value="Todas">Todas las categorías</option>
+        <option value="Permiso">Permiso</option>
+        <option value="Compra">Compra</option>
+        <option value="Soporte">Soporte</option>
+      </select>
+
+      <!-- Estado -->
+      <select
+        class="border rounded-md px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-green-600 col-span-2 md:col-span-1"
+        [value]="store.getStatus()"
+        (change)="store.setStatus($any($event.target).value)"
+      >
+        <option value="Todos">Todos los estados</option>
+        <option value="Pendiente">Pendiente</option>
+        <option value="En Proceso">En Proceso</option>
+        <option value="Finalizada">Finalizada</option>
+      </select>
+
+      <!-- Limpiar filtros -->
+      <button
+        class="inline-flex items-center justify-center bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors col-span-2 md:col-span-1 gap-x-2"
+        (click)="resetFilters()"
+      >
+        <!-- Icono -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-5 h-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18 18 6M6 6l12 12"
+          />
+        </svg>
+
+        <span class="text-sm sm:text-base">Limpiar filtros</span>
       </button>
     </div>
   </div>
 
-  <!-- Tabla de solicitudes -->
+  <!-- Contenedor tabla de solicitudes responsive -->
   <div class="w-full overflow-x-auto">
+    <!-- tabla de solicitudes -->
     <table class="min-w-full table-fixed bg-white rounded">
       <thead>
         <tr
@@ -104,12 +140,34 @@
       </thead>
       <tbody class="text-sm font-normal text-gray-700">
         <tr
-          class="hover:bg-gray-50 border"
+          class="hover:bg-gray-50 border even:bg-gray-50 odd:bg-white"
           *ngFor="let r of store.applyFilters()"
         >
           <td class="px-4 py-2">{{ r.title }}</td>
-          <td class="px-4 py-2">{{ r.category }}</td>
-          <td class="px-4 py-2">{{ r.status }}</td>
+          <td class="px-4 py-2">
+            <span
+              [ngClass]="{
+                'bg-rose-600': r.category === 'Permiso',
+                'bg-orange-600': r.category === 'Compra',
+                'bg-cyan-600 ': r.category === 'Soporte'
+              }"
+              class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium text-gray-200 ring-1 ring-gray-500/10 ring-inset"
+            >
+              {{ r.category | titlecase }}
+            </span>
+          </td>
+          <td class="px-4 py-2">
+            <span
+              [ngClass]="{
+                'bg-blue-600 ': r.status === 'Pendiente',
+                'bg-green-600 ': r.status === 'En Proceso',
+                'bg-gray-600 ': r.status === 'Finalizada'
+              }"
+              class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium text-gray-200 ring-1 ring-gray-500/10 ring-inset"
+            >
+              {{ r.status | titlecase }}
+            </span>
+          </td>
           <td class="px-4 py-2">
             {{ r.createdAt | date : "dd/MM/yyyy" : "es-MX" }}
           </td>
@@ -180,6 +238,7 @@
       />
     </table>
   </div>
+  <!-- toast notification -->
   <div
     *ngIf="showToast"
     class="fixed top-4 right-4 z-50 px-4 py-3 rounded shadow-md text-white transition-opacity duration-300"

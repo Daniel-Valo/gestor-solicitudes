@@ -20,42 +20,67 @@
         <!-- Título -->
         <div>
           <label for="title" class="block text-sm font-medium text-gray-700">
-            Título
+            Título*
           </label>
           <input
             id="title"
             type="text"
             formControlName="title"
             placeholder="Escribe el título"
+            [ngClass]="{
+              'border-red-500 ring-red-500':
+                form.get('title')?.invalid && form.get('title')?.touched,
+              'border-gray-300':
+                form.get('title')?.valid || !form.get('title')?.touched
+            }"
             class="w-full border rounded-md px-3 py-2 mt-1 text-sm focus:outline-green-600"
           />
           <!-- MENSAJES PARA VALIDACIONES -->
-          <small
-            class="text-red-600"
+          <div
             *ngIf="form.get('title')?.touched && form.get('title')?.invalid"
+            class="text-red-600"
           >
-            El título es obligatorio y debe tener máximo 100 caracteres.
-          </small>
+            <small *ngIf="form.get('title')?.errors?.['required']">
+              Este campo es obligatorio.
+            </small>
+            <small *ngIf="form.get('title')?.errors?.['minlength']">
+              Minimo de 5 caracteres
+            </small>
+            <small *ngIf="form.get('title')?.errors?.['maxlength']">
+              Maximo de 40 caracteres
+            </small>
+          </div>
         </div>
         <!-- Usuario -->
         <div>
           <label for="user" class="block text-sm font-medium text-gray-700">
-            Usuario solicitante
+            Usuario solicitante*
           </label>
           <input
             id="user"
             type="text"
             formControlName="user"
             placeholder="Nombre del solicitante"
+            [ngClass]="{
+              'border-red-500 ring-red-500':
+                form.get('user')?.invalid && form.get('user')?.touched,
+              'border-gray-300':
+                form.get('user')?.valid || !form.get('user')?.touched
+            }"
             class="w-full border rounded-md px-3 py-2 mt-1 text-sm focus:outline-green-600"
           />
           <!-- MENSAJES PARA VALIDACIONES -->
-          <small
-            class="text-red-600"
+          <div
             *ngIf="form.get('user')?.touched && form.get('user')?.invalid"
+            class="text-red-600"
           >
-            El nombre es obligatorio (mínimo 3 caracteres).
-          </small>
+            <small *ngIf="form.get('user')?.errors?.['required']">
+              Este campo es obligatorio.
+            </small>
+            <small *ngIf="form.get('user')?.errors?.['minlength']">
+              Minimo de 3 caracteres
+            </small>
+          </div>
         </div>
         <!-- Categoría y Estatus -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -93,24 +118,41 @@
           <label
             for="description"
             class="block text-sm font-medium text-gray-700"
-            >Descripción</label
           >
+            Descripción*
+          </label>
           <textarea
             id="description"
             formControlName="description"
             rows="3"
+            [ngClass]="{
+              'border-red-500 ring-red-500':
+                form.get('description')?.invalid &&
+                form.get('description')?.touched,
+              'border-gray-300':
+                form.get('description')?.valid ||
+                !form.get('description')?.touched
+            }"
             class="w-full border rounded-md px-3 py-2 mt-1 text-sm focus:outline-green-600"
           ></textarea>
           <!-- MENSAJES PARA VALIDACIONES -->
-          <small
-            class="text-red-600"
+          <div
             *ngIf="
               form.get('description')?.touched &&
               form.get('description')?.invalid
             "
+            class="text-red-600"
           >
-            La descripcion es obligatoria y debe tener máximo 100 caracteres.
-          </small>
+            <small *ngIf="form.get('description')?.errors?.['required']">
+              Este campo es obligatorio.
+            </small>
+            <small *ngIf="form.get('description')?.errors?.['minlength']">
+              Minimo de 10 caracteres
+            </small>
+            <small *ngIf="form.get('description')?.errors?.['maxlength']">
+              Maximo de 120 caracteres
+            </small>
+          </div>
         </div>
         <!-- Fecha -->
         <div>
@@ -118,32 +160,33 @@
             for="createdAt"
             class="block text-sm font-medium text-gray-700"
           >
-            Fecha
+            Fecha de creaci&oacute;n*
           </label>
           <input
             type="date"
             id="createdAt"
             formControlName="createdAt"
+            [ngClass]="{
+              'border-red-500 ring-red-500':
+                form.get('createdAt')?.invalid &&
+                form.get('createdAt')?.touched,
+              'border-gray-300':
+                form.get('createdAt')?.valid || !form.get('createdAt')?.touched
+            }"
             class="w-full border rounded-md px-3 py-2 mt-1 text-sm focus:outline-green-600"
           />
           <!-- MENSAJES PARA VALIDACIONES -->
-          <small
-            class="text-red-600"
+          <div
             *ngIf="
               form.get('createdAt')?.touched && form.get('createdAt')?.invalid
             "
+            class="text-red-600"
           >
-            El campo fecha de creaci&oacute;n no es valida
-          </small>
-          <div
-            *ngIf="
-              form.controls['createdAt'].hasError('futureDate') &&
-              form.get('createdAt')?.touched
-            "
-          >
-            <small class="text-red-600">
-              La fecha no puede ser en el futuro, es decir, mayor a la fecha
-              actual
+            <small *ngIf="form.get('createdAt')?.errors?.['required']">
+              Este campo es obligatorio.
+            </small>
+            <small *ngIf="form.get('createdAt')?.errors?.['invalidDateRange']">
+              Solo se permite seleccionar una fecha de hoy o de ayer.
             </small>
           </div>
         </div>

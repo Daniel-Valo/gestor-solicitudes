@@ -20,7 +20,7 @@
       <div class="flex flex-col gap-4 px-0 py-4">
         <!-- CAMPO DE TEXTO PARA USUARIO -->
         <div>
-          <label class="text-gray-700 focus:border-green-600">Usuario</label>
+          <label class="text-gray-700 focus:border-green-600">Usuario*</label>
           <!-- ICONO -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -38,6 +38,12 @@
           </svg>
           <!-- CAMPO DE TEXTO -->
           <input
+            [ngClass]="{
+              'border-red-500 ring-red-500':
+                form.get('username')?.invalid && form.get('username')?.touched,
+              'border-gray-300':
+                form.get('username')?.valid || !form.get('username')?.touched
+            }"
             class="py-2 pl-10 border border-gray-300 w-full focus:border-green-700 focus:outline-none rounded"
             placeholder="Usuario"
             formControlName="username"
@@ -48,19 +54,19 @@
             *ngIf="
               form.get('username')?.touched && form.get('username')?.invalid
             "
-            class="text-red-600 text-sm"
+            class="text-red-600"
           >
-            <div *ngIf="form.get('username')?.errors?.['required']">
-              El nombre de usuario es obligatorio
-            </div>
-            <div *ngIf="form.get('username')?.errors?.['minlength']">
+            <small *ngIf="form.get('username')?.errors?.['required']">
+              Este campo es obligatorio
+            </small>
+            <small *ngIf="form.get('username')?.errors?.['minlength']">
               Mínimo 5 caracteres
-            </div>
+            </small>
           </div>
         </div>
         <!-- CAMPO DE TEXTO PARA CONTRASEÑA -->
         <div>
-          <label class="text-gray-700">Contraseña:</label>
+          <label class="text-gray-700">Contraseña*</label>
           <!-- ICONO -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -78,6 +84,12 @@
           </svg>
           <!-- CAMPO DE PASSWORD -->
           <input
+            [ngClass]="{
+              'border-red-500 ring-red-500':
+                form.get('password')?.invalid && form.get('password')?.touched,
+              'border-gray-300':
+                form.get('password')?.valid || !form.get('password')?.touched
+            }"
             class="py-2 pl-10 border border-gray-300 w-full focus:border-green-700 focus:outline-none rounded"
             placeholder="Contraseña"
             formControlName="password"
@@ -91,14 +103,14 @@
             *ngIf="
               form.get('password')?.touched && form.get('password')?.invalid
             "
-            class="text-red-600 text-sm"
+            class="text-red-600"
           >
-            <div *ngIf="form.get('password')?.errors?.['required']">
-              La contraseña es obligatoria
-            </div>
-            <div *ngIf="form.get('password')?.errors?.['minlength']">
+            <small *ngIf="form.get('password')?.errors?.['required']">
+              Este campo es obligatorio
+            </small>
+            <small *ngIf="form.get('password')?.errors?.['minlength']">
               Mínimo 6 caracteres
-            </div>
+            </small>
           </div>
         </div>
         <!-- BOTON PARA INICIAR SESION -->

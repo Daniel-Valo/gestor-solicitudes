@@ -1,10 +1,5 @@
-import { Component, Inject, OnInit, Signal } from '@angular/core';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Request } from '../../../../core/models/request.model';
-import { RequestCategory } from '../../../../core/models/request-category.enum';
-import { RequestStatus } from '../../../../core/models/request-status.enum';
-import { REQUEST_SERVICE } from '../../../../core/services/requests/request.token';
-import { RequestServiceInterface } from '../../../../core/services/requests/request-service.interface';
 import { RequestSignalStore } from '../../../../core/stores/request-signal.store';
 import { Router } from '@angular/router';
 import { AuthServiceInterface } from '../../../../core/services/auth/auth-service.interface';
@@ -48,19 +43,6 @@ export class RequestListComponent implements OnInit {
   ngOnInit(): void {
     this.store.loadRequests();
   }
-
-  onSearchChange(value: string) {
-    this.store.setSearchTerm(value);
-  }
-
-  onCategoryChange(value: string) {
-    this.store.setCategory(value);
-  }
-
-  onStatusChange(value: string) {
-    this.store.setStatus(value);
-  }
-
   // Abre el modal de confirmación de eliminación con un mensaje personalizado
   onModalConfirmDeleteOpen(request: Request): void {
     this.requestIdToDelete = request?.id ?? 0;
@@ -138,5 +120,11 @@ export class RequestListComponent implements OnInit {
   logout(): void {
     this.auth.logout();
     this.router.navigate(['/login']); // redirige al login o página de inicio
+  }
+
+  resetFilters(): void {
+    this.store.setSearchTerm('');
+    this.store.setCategory('Todas');
+    this.store.setStatus('Todos');
   }
 }
